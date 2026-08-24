@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 10 11 13; /* #0A0B0D Deep Obsidian Black */
+    --surface: 18 19 22; /* #121316 Matte Charcoal */
+    --surface-hover: 25 27 32; /* #191B20 Elevated Dark */
+    --border: 37 40 48; /* #252830 Subtle Obsidian Border */
+    --border-bright: 55 60 70; /* #373C46 Visible Line */
+    --primary: 226 241 53; /* #E2F135 Electric Lime / Acid Yellow */
+    --primary-hover: 223 255 18; /* #DFFF12 Neon Accent */
+    --foreground: 245 247 250; /* #F5F7FA Pure Platinum Text */
+    --muted: 148 163 184; /* #94A3B8 Soft Slate Gray */
+  }
+
+  * {
+    border-color: rgb(var(--border) / 0.8);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+  }
+}
+
+/* Typography & Visual Effects */
+.bg-grid-pattern {
+  background-size: 36px 36px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.bg-dot-pattern {
+  background-size: 24px 24px;
+  background-image: radial-gradient(circle, rgba(226, 241, 53, 0.07) 1px, transparent 1px);
+}
+
+.text-gradient-lime {
+  background: linear-gradient(135deg, #FFFFFF 0%, #E2F135 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-lime-glow {
+  box-shadow: 0 0 20px -5px rgba(226, 241, 53, 0.15);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0B0D;
+}
+::-webkit-scrollbar-thumb {
+  background: #252830;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E2F135;
+}

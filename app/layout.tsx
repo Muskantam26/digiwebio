@@ -1,0 +1,92 @@
+import type { Metadata } from "next";
+import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
+import "./globals.css";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
+import { SITE_CONFIG } from "@/lib/config";
+import { getOrganizationJsonLd, getLocalBusinessJsonLd } from "@/lib/seo";
+
+const jakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-heading",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: `${SITE_CONFIG.name} | Digital Technology Agency India`,
+    template: `%s | ${SITE_CONFIG.name}`,
+  },
+  description: SITE_CONFIG.description,
+  keywords: SITE_CONFIG.keywords,
+  metadataBase: new URL(SITE_CONFIG.url),
+  alternates: {
+    canonical: SITE_CONFIG.url,
+  },
+  openGraph: {
+    title: `${SITE_CONFIG.name} | Digital Technology Agency`,
+    description: SITE_CONFIG.description,
+    url: SITE_CONFIG.url,
+    siteName: SITE_CONFIG.name,
+    images: [
+      {
+        url: `${SITE_CONFIG.url}/digiwebiologo.jpeg`,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_CONFIG.name} Digital Technology Agency`,
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_CONFIG.name} | Digital Technology Agency`,
+    description: SITE_CONFIG.description,
+    images: [`${SITE_CONFIG.url}/digiwebiologo.jpeg`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const orgJsonLd = getOrganizationJsonLd();
+  const businessJsonLd = getLocalBusinessJsonLd();
+
+  return (
+    <html
+      lang="en"
+      className={`${jakartaSans.variable} ${spaceGrotesk.variable} dark h-full antialiased`}
+    >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-[#0A0B0D] text-[#F5F7FA] font-sans selection:bg-[#E2F135] selection:text-[#0A0B0D]">
+        <Navbar />
+        <main className="flex-1 pt-20">{children}</main>
+        <Footer />
+        <WhatsAppFloat />
+      </body>
+    </html>
+  );
+}
