@@ -48,23 +48,18 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#191B20]">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-3 mb-4 group">
-              <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-[#252830] bg-[#121316] p-1 flex items-center justify-center">
+            <Link
+              href="/"
+              className="inline-flex items-center group focus:outline-none mb-4"
+            >
+              <div className="relative h-12 w-48 sm:w-56 flex items-center justify-start overflow-visible">
                 <Image
-                  src="/digiwebiologo.jpeg"
+                  src="/AppLogo.png"
                   alt="DigiWebIO Logo"
-                  width={40}
-                  height={40}
-                  className="object-contain"
+                  width={400}
+                  height={120}
+                  className="h-20 sm:h-24 w-auto object-contain origin-left scale-[1.7] sm:scale-[1.9] transition-transform duration-300 group-hover:scale-[1.8] sm:group-hover:scale-[2.0]"
                 />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-bold tracking-tight text-white">
-                  DIGIWEB<span className="text-[#E2F135]">IO</span>
-                </span>
-                <span className="text-[10px] tracking-widest uppercase text-slate-400 font-medium">
-                  Digital Agency
-                </span>
               </div>
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed mb-6 max-w-sm">

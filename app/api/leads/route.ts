@@ -3,6 +3,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Lead from "@/models/Lead";
 import { leadFormSchema } from "@/lib/validation";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { sendEnquiryEmails } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
@@ -47,8 +48,10 @@ export async function POST(req: NextRequest) {
     // 4. Connect to MongoDB Atlas (if connection URI is provided)
     const mongooseConn = await connectToDatabase();
 
+    let createdLeadId = null;
+
     if (mongooseConn) {
-      // Save lead to MongoDB collection
+      // Save lead to MongoDB collection FIRST
       const newLead = await Lead.create({
         fullName: sanitizedData.fullName,
         email: sanitizedData.email,
@@ -60,27 +63,39 @@ export async function POST(req: NextRequest) {
         ipAddress: clientIp,
         status: "new",
       });
-
-      return NextResponse.json(
-        {
-          success: true,
-          message: "Thank you! Your project enquiry has been received successfully. Our team will contact you within 24 hours.",
-          leadId: newLead._id,
-        },
-        { status: 201 }
-      );
+      createdLeadId = newLead._id;
     } else {
-      // If MongoDB URI is not set in environment yet, log and return graceful success
+      // If MongoDB URI is not set in environment yet, log lead data
       console.log("[DigiWebIO Lead Submission Received]", sanitizedData);
-      return NextResponse.json(
-        {
-          success: true,
-          message: "Thank you! Your project enquiry has been received successfully. Our team will contact you within 24 hours.",
-          note: "Form processed successfully (Development fallback active).",
-        },
-        { status: 200 }
-      );
     }
+
+    // 5. Trigger Resend Email Notifications ONLY AFTER database save completes
+    let emailStatus = null;
+    try {
+      emailStatus = await sendEnquiryEmails({
+        fullName: sanitizedData.fullName,
+        email: sanitizedData.email,
+        phone: sanitizedData.phone,
+        company: sanitizedData.company,
+        service: sanitizedData.service,
+        budget: sanitizedData.budget,
+        description: sanitizedData.description,
+      });
+    } catch (emailError) {
+      // Log email warning so database save and user response remain successful
+      console.error("[Email Dispatch Warning] Failed to dispatch Resend emails:", emailError);
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        message:
+          "Thank you! Your project enquiry has been received successfully. Our team will contact you within 24 hours.",
+        ...(createdLeadId && { leadId: createdLeadId }),
+        ...(emailStatus && { emailStatus }),
+      },
+      { status: 201 }
+    );
   } catch (error: unknown) {
     console.error("Lead submission error:", error);
     return NextResponse.json(

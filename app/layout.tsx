@@ -74,6 +74,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${jakartaSans.variable} ${spaceGrotesk.variable} dark h-full antialiased`}
     >
       <head>
