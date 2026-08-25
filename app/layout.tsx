@@ -30,6 +30,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_CONFIG.url,
   },
+  icons: {
+    icon: "/images/digiwebiologo-favicon.png",
+    shortcut: "/images/digiwebiologo-favicon.png",
+    apple: "/images/digiwebiologo-favicon.png",
+  },
   openGraph: {
     title: `${SITE_CONFIG.name} | Digital Technology Agency`,
     description: SITE_CONFIG.description,
