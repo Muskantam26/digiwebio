@@ -20,7 +20,7 @@ export const SITE_CONFIG = {
     "ERP dashboard development"
   ],
   contact: {
-    email: "contact@digiwebio.in",
+    email: "digiwebiodigitalagency@gmail.com",
     phone: "+91 62689 51339",
     phoneFormatted: "+916268951339",
     whatsappNumber: "916268951339", // E.164 format without plus for wa.me link

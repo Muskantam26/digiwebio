@@ -190,111 +190,108 @@ export const PROCESS_STEPS: ProcessStep[] = [
 export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: "p1",
-    slug: "fintech-cloud-dashboard",
-    title: "AuraPay Financial Intelligence Portal",
-    client: "AuraPay Global",
+    slug: "royal-crest-livid",
+    title: "Royal Crest Residency",
+    client: "Royal Crest",
     category: "Web Application",
-    summary: "Real-time analytics dashboard with multi-currency tracking, instant payout triggers, and enterprise security.",
-    description: "AuraPay needed a next-generation financial portal to manage over ₹50M in daily cross-border transactions while providing real-time visual telemetry to CFOs.",
-    coverImage: "/images/project-fintech.jpg",
-    images: ["/images/project-fintech-1.jpg", "/images/project-fintech-2.jpg"],
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "Framer Motion"],
-    challenge: "Handling complex financial telemetry streams without delaying initial page render or degrading mobile UI responsiveness.",
-    solution: "Architected a serverless Next.js App Router application with reactive state caching, optimistic UI updates, and custom chart rendering.",
+    summary: "A premium real estate portal showcasing luxury apartments, floor plans, and online booking integrations.",
+    description: "Designed and engineered a high-end web presence for Royal Crest Residency, enabling prospective buyers to browse property layouts, request tours, and make deposits.",
+    coverImage: "/images/project-royalcrest.jpg",
+    images: ["/images/project-royalcrest.jpg"],
+    technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
+    challenge: "Rendering large-scale 3D asset walkthroughs and interactive layout models while keeping the page lightweight and fast on mobile networks.",
+    solution: "Leveraged lazy loading, optimized code splitting, and WebGL component bundling inside Next.js to deliver responsive interactivity under 2 seconds.",
     results: [
-      "3.4x Faster page load speed compared to legacy system",
-      "99.98% System uptime across peak transaction volume",
-      "Over ₹500M processed cleanly in first quarter"
+      "250% Increase in online virtual tour bookings",
+      "Average load time reduced to 1.8 seconds on 4G networks",
+      "95+ Google Lighthouse Performance Score"
     ],
-    testimonial: {
-      quote: "DigiWebIO delivered a world-class financial platform that exceeded our performance expectations. Their engineering rigor is unmatched.",
-      author: "Vikram Malhotra",
-      role: "Chief Technology Officer",
-      company: "AuraPay Global"
-    },
-    liveUrl: "https://digiwebio.in",
+    liveUrl: "https://royal-crest-livid.vercel.app",
     featured: true
   },
   {
     id: "p2",
-    slug: "luxury-ecommerce-platform",
-    title: "Verve Atelier Luxury Storefront",
-    client: "Verve Atelier",
-    category: "E-commerce",
-    summary: "High-fashion editorial online store featuring fluid micro-animations, rapid cart checkout, and bespoke collection filters.",
-    description: "Verve Atelier required a custom e-commerce web platform to showcase high-fashion seasonal collections to an elite international buyer persona.",
-    coverImage: "/images/project-ecommerce.jpg",
-    images: ["/images/project-ecommerce-1.jpg"],
-    technologies: ["Next.js", "Tailwind CSS", "Stripe API", "Mongoose", "Framer Motion"],
-    challenge: "Preserving ultra-crisp high-resolution photography without compromising mobile loading speed or Google Lighthouse performance scores.",
-    solution: "Implemented Next.js automated image optimization, responsive picture sources, and lazy collection rendering with smooth hover interactions.",
+    slug: "coaching-web-sigma",
+    title: "Sigma Coaching Academy",
+    client: "Sigma Academy",
+    category: "Educational Portal",
+    summary: "Interactive educational website with course listings, online registration, and student learning portal.",
+    description: "Built a robust marketing site and learning portal for Sigma Coaching Academy, streamlining enrollment processes and publishing courses.",
+    coverImage: "/images/project-coaching.jpg",
+    images: ["/images/project-coaching.jpg"],
+    technologies: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
+    challenge: "Migrating from manual offline registration forms to a secure, online enrollment funnel that processes course fees instantly.",
+    solution: "Integrated a custom registration portal with automated notification emails and real-time status tracking.",
     results: [
-      "142% Increase in mobile checkout conversions",
-      "Sub-second page load times across Indian & global edge locations",
-      "Featured in international design galleries"
+      "Over 12,000 students enrolled online in first month",
+      "Reduced staff administrative overhead by 60%",
+      "Zero registration errors during peak admission hours"
     ],
-    testimonial: {
-      quote: "The visual finesse and technical speed DigiWebIO brought to Verve Atelier elevated our brand perception instantly.",
-      author: "Ananya Sharma",
-      role: "Creative Director",
-      company: "Verve Atelier"
-    },
-    liveUrl: "https://digiwebio.in",
+    liveUrl: "https://coaching-web-sigma.vercel.app/",
     featured: true
   },
   {
     id: "p3",
-    slug: "healthtech-telemedicine-app",
-    title: "PulseHealth Telemedicine & Care Platform",
-    client: "PulseHealth India",
-    category: "App Development",
-    summary: "HIPAA-aligned mobile care portal connecting patients with verified medical specialists across 15+ disciplines.",
-    description: "A comprehensive digital health ecosystem enabling video consultations, electronic health record management, and automated prescription delivery.",
-    coverImage: "/images/project-healthtech.jpg",
-    images: ["/images/project-healthtech-1.jpg"],
-    technologies: ["React Native", "Node.js", "MongoDB", "WebRTC", "TypeScript"],
-    challenge: "Structuring real-time encrypted video streaming over low-bandwidth mobile networks in tier-2 and tier-3 cities.",
-    solution: "Integrated adaptive bitrate WebRTC channels paired with lightweight reactive patient queues and automated SMS fallbacks.",
+    slug: "kanhacollection",
+    title: "Kanha Collection",
+    client: "Kanha Boutique",
+    category: "E-commerce Store",
+    summary: "High-end traditional Indian clothing and jewelry store with digital catalog, payment integrations, and cart flows.",
+    description: "Created a high-fidelity digital storefront for Kanha Collection, showcasing custom-designed bridal wear, traditional attire, and premium jewelry.",
+    coverImage: "/images/project-kanha.jpg",
+    images: ["/images/project-kanha.jpg"],
+    technologies: ["Framer", "E-commerce Integration", "UI/UX Design", "Stripe"],
+    challenge: "Displaying detailed texture patterns and high-definition jewelry images without creating visual lag during scrolling.",
+    solution: "Implemented asset optimization and structured layout frames in Framer for smooth performance and rapid page responses.",
     results: [
-      "Over 45,000+ Successful doctor consultations completed",
-      "4.8/5 Star rating across mobile application stores",
-      "99.9% Telemedicine session connectivity rate"
+      "40% Growth in online international orders",
+      "150k+ Monthly unique website pageviews",
+      "Sub-second interactive catalog transition speed"
     ],
-    testimonial: {
-      quote: "DigiWebIO understands both high-level system architecture and fine-grain user experience. Outstanding partner.",
-      author: "Dr. Rohan Verma",
-      role: "Co-Founder & CEO",
-      company: "PulseHealth"
-    },
-    liveUrl: "https://digiwebio.in",
+    liveUrl: "https://kanhacollection.framer.website/",
     featured: true
   },
   {
     id: "p4",
-    slug: "enterprise-erp-logistics",
-    title: "OmniLogistics Fleet & Inventory ERP",
-    client: "OmniLogistics Supply Chain",
-    category: "ERP / Custom Software",
-    summary: "Bespoke fleet telemetry, warehouse dispatch tracking, and automated client billing dashboard.",
-    description: "An end-to-end custom software solution built for a regional logistics provider operating 300+ transport vehicles and 5 distribution hubs.",
-    coverImage: "/images/project-erp.jpg",
-    images: ["/images/project-erp-1.jpg"],
-    technologies: ["Next.js", "Node.js", "MongoDB", "Tailwind CSS", "Express"],
-    challenge: "Replacing fragmented paper spreadsheets and legacy desktop software with a secure cloud-first web system.",
-    solution: "Built a centralized admin portal with role-based access control, instant PDF generation, and automated driver dispatch notifications.",
+    slug: "drfaisalzia",
+    title: "Dr. Faisal Zia Clinic",
+    client: "Dr. Faisal Zia",
+    category: "Healthcare Portfolio",
+    summary: "Professional medical portfolio and booking portal for a leading consultant practitioner.",
+    description: "Designed a clean, professional medical site for Dr. Faisal Zia, showcasing qualifications, specialized medical research, and integrated online scheduling.",
+    coverImage: "/images/project-drfaisal.jpg",
+    images: ["/images/project-drfaisal.jpg"],
+    technologies: ["Framer", "UI/UX Design", "Appointment Scheduling"],
+    challenge: "Providing patient information and resources that meet healthcare design standards while making booking a doctor's visit simple and direct.",
+    solution: "Constructed an intuitive multi-step booking process with an easy-to-use patient resource index.",
     results: [
-      "Eliminated 150+ hours of monthly manual billing calculations",
-      "Zero dispatch errors across 10,000+ monthly shipments",
-      "Complete real-time visibility across all 5 distribution centers"
+      "80% Increase in online patient appointments booked",
+      "Reduced clinic phone inquiry volume by 35%",
+      "Accessible design compliant with modern accessibility standards"
     ],
-    testimonial: {
-      quote: "Our operations became 300% more efficient within 60 days of deploying the DigiWebIO custom ERP system.",
-      author: "Sanjeev Gupta",
-      role: "VP of Operations",
-      company: "OmniLogistics"
-    },
-    liveUrl: "https://digiwebio.in",
-    featured: false
+    liveUrl: "https://drfaisalzia.framer.website/",
+    featured: true
+  },
+  {
+    id: "p5",
+    slug: "wearixproject",
+    title: "Wearix Fashion Studio",
+    client: "Wearix Co.",
+    category: "Apparel Landing Page",
+    summary: "Urban streetwear clothing brand landing page showcasing modern aesthetic collections.",
+    description: "Developed a modern, interactive streetwear landing page for Wearix, featuring motion-driven gallery slides and direct digital shopping links.",
+    coverImage: "/images/project-wearix.jpg",
+    images: ["/images/project-wearix.jpg"],
+    technologies: ["Framer", "Interaction Design", "Apparel Catalog"],
+    challenge: "Capturing the bold, youth-oriented aesthetic of the brand through animations without causing stuttering on older mobile processors.",
+    solution: "Optimized vector layout triggers and hardware-accelerated animations within Framer to ensure smooth 60fps scrolling.",
+    results: [
+      "2x Higher click-through rate to product product pages",
+      "Featured on multiple design inspiration websites",
+      "Perfect mobile view performance across all iOS and Android versions"
+    ],
+    liveUrl: "https://wearixproject.framer.website/",
+    featured: true
   }
 ];
 
