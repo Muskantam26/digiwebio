@@ -1,16 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { PROJECTS_DATA } from "@/data/initialData";
 import { ProjectItem } from "@/types";
 
-export default function PortfolioGrid({ projects, limit }: { projects?: ProjectItem[]; limit?: number }) {
+export default function PortfolioGrid({ projects: propsProjects, limit }: { projects?: ProjectItem[]; limit?: number }) {
+  const [dbProjects, setDbProjects] = useState<ProjectItem[]>(propsProjects || []);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
-  const projectList = projects && projects.length > 0 ? projects : PROJECTS_DATA;
+  useEffect(() => {
+    if (!propsProjects || propsProjects.length === 0) {
+      fetch("/api/projects")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && data.projects && data.projects.length > 0) {
+            setDbProjects(data.projects);
+          } else {
+            setDbProjects(PROJECTS_DATA);
+          }
+        })
+        .catch((err) => {
+          console.warn("Failed to load projects from DB API, using fallback data:", err);
+          setDbProjects(PROJECTS_DATA);
+        });
+    }
+  }, [propsProjects]);
+
+  const projectList = dbProjects.length > 0 ? dbProjects : PROJECTS_DATA;
 
   const categories = ["All", ...Array.from(new Set(projectList.map((p) => p.category)))];
 
@@ -90,18 +109,6 @@ export default function PortfolioGrid({ projects, limit }: { projects?: ProjectI
                   <p className="text-xs text-slate-300 leading-relaxed mb-6">
                     {project.summary}
                   </p>
-
-                  {/* Tech stack */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.technologies.map((tech, tidx) => (
-                      <span
-                        key={tidx}
-                        className="text-[11px] bg-[#0A0B0D] text-slate-400 px-2.5 py-1 rounded-md border border-[#191B20]"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
 
                   {/* Results highlight */}
                   {project.results && project.results.length > 0 && (

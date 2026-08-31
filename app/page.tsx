@@ -10,9 +10,9 @@ import ContactForm from "@/components/sections/ContactForm";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata = generatePageMetadata({
-  title: "DigiWebIO | Full-Stack Web Development & Digital Agency India",
+  title: "DigiWebIO | Software Development Agency",
   description:
-    "DigiWebIO is a premier Indian digital technology agency specializing in Next.js web applications, bespoke website development, mobile apps, UI/UX design, SEO, and custom ERP software.",
+    "DigiWebIO is a software development agency helping businesses build modern websites, web applications, e-commerce solutions, custom software and digital products.",
   path: "/",
 });
 

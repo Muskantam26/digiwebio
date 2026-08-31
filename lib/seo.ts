@@ -14,7 +14,9 @@ export function generatePageMetadata({
   keywords?: string[];
   image?: string;
 }): Metadata {
-  const metaTitle = `${title} | ${SITE_CONFIG.name}`;
+  const metaTitle = title.includes(SITE_CONFIG.name)
+    ? title
+    : `${title} | ${SITE_CONFIG.name}`;
   const metaDesc = description || SITE_CONFIG.description;
   const url = `${SITE_CONFIG.url}${path}`;
   const combinedKeywords = [...SITE_CONFIG.keywords, ...keywords];
@@ -37,7 +39,7 @@ export function generatePageMetadata({
           url: image,
           width: 1200,
           height: 630,
-          alt: `${SITE_CONFIG.name} Digital Technology Agency`,
+          alt: `${SITE_CONFIG.name} Software Development Agency`,
         },
       ],
       locale: "en_IN",
@@ -73,6 +75,16 @@ export function getOrganizationJsonLd() {
     url: SITE_CONFIG.url,
     logo: `${SITE_CONFIG.url}/digiwebiologo.jpeg`,
     description: SITE_CONFIG.description,
+    founder: {
+      "@type": "Person",
+      name: "Muskan Tamrakar",
+      jobTitle: "Founder & Full-Stack Web Developer",
+      worksFor: {
+        "@type": "Organization",
+        name: SITE_CONFIG.name,
+        url: SITE_CONFIG.url,
+      },
+    },
     address: {
       "@type": "PostalAddress",
       streetAddress: SITE_CONFIG.contact.address.street,

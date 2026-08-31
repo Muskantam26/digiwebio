@@ -1,18 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
-import Lead from "@/models/Lead";
-import { leadFormSchema, sanitizeInput } from "@/lib/validation";
+import Enquiry from "@/models/Enquiry";
+import { enquiryFormSchema, sanitizeInput } from "@/lib/validation";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { sendEnquiryNotificationEmail } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
+    // 1. Rate limiting check (Prevent spam / duplicate submissions)
     const clientIp =
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       req.headers.get("x-real-ip") ||
       "127.0.0.1";
 
-    const rateCheck = checkRateLimit(clientIp, 5, 60 * 1000);
+    const rateCheck = checkRateLimit(clientIp, 10, 60 * 1000);
     if (!rateCheck.success) {
       return NextResponse.json(
         {
@@ -23,19 +24,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // 2. Parse request JSON body
     const body = await req.json();
 
-    const mappedBody = {
-      fullName: body.fullName || body.name || "",
+    const rawData = {
+      name: body.name || body.fullName || "",
       email: body.email || "",
       phone: body.phone || "",
       company: body.company || "",
-      service: body.service || "Custom Software Development",
-      budget: body.budget || "",
-      description: body.description || body.message || "",
+      service: body.service || "General Software Enquiry",
+      message: body.message || body.description || "",
     };
 
-    const validationResult = leadFormSchema.safeParse(mappedBody);
+    // 3. Server-side validation via Zod
+    const validationResult = enquiryFormSchema.safeParse(rawData);
     if (!validationResult.success) {
       const errorMessages = validationResult.error.issues.map(
         (issue) => `${issue.path.join(".")}: ${issue.message}`
@@ -52,72 +54,72 @@ export async function POST(req: NextRequest) {
 
     const validated = validationResult.data;
     const sanitizedData = {
-      fullName: sanitizeInput(validated.fullName),
+      name: sanitizeInput(validated.name),
       email: validated.email.toLowerCase().trim(),
       phone: sanitizeInput(validated.phone),
       company: sanitizeInput(validated.company || ""),
       service: sanitizeInput(validated.service),
-      budget: sanitizeInput(validated.budget || ""),
-      description: sanitizeInput(validated.description),
+      message: sanitizeInput(validated.message),
     };
 
-    let createdLeadId = null;
+    // 4. Save Enquiry to Database (mongodb://localhost:27017/digiwebio or production DB)
+    let savedEnquiryId: string | null = null;
     let createdAt = new Date();
 
     try {
       const mongooseConn = await connectToDatabase();
       if (mongooseConn) {
-        const newLead = await Lead.create({
-          fullName: sanitizedData.fullName,
+        const enquiryRecord = await Enquiry.create({
+          name: sanitizedData.name,
           email: sanitizedData.email,
           phone: sanitizedData.phone,
           company: sanitizedData.company,
           service: sanitizedData.service,
-          budget: sanitizedData.budget,
-          source: body.source || "Website Form",
-          description: sanitizedData.description,
-          ipAddress: clientIp,
+          message: sanitizedData.message,
           status: "New",
+          ipAddress: clientIp,
         });
-        createdLeadId = newLead._id.toString();
-        createdAt = newLead.createdAt || createdAt;
+        savedEnquiryId = enquiryRecord._id.toString();
+        createdAt = enquiryRecord.createdAt || createdAt;
+        console.log("[Database Success] Enquiry saved to MongoDB. ID:", savedEnquiryId);
+      } else {
+        console.warn("[Database Warning]: Mongoose connection could not be established. Payload:", sanitizedData);
       }
     } catch (dbError) {
-      console.error("[Lead DB Error]:", dbError);
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Something went wrong. Please try again.",
-        },
-        { status: 500 }
-      );
+      console.error("[Database Save Exception]:", dbError);
     }
 
-    // Email dispatch safely
+    // 5. Send Email Notification via Resend
+    let emailStatus: { success: boolean; error?: string } = { success: false };
     try {
-      await sendEnquiryNotificationEmail({
-        name: sanitizedData.fullName,
+      emailStatus = await sendEnquiryNotificationEmail({
+        name: sanitizedData.name,
         email: sanitizedData.email,
         phone: sanitizedData.phone,
         company: sanitizedData.company,
         service: sanitizedData.service,
-        message: `${sanitizedData.description} [Budget: ${sanitizedData.budget}]`,
-        createdAt,
+        message: sanitizedData.message,
+        createdAt: createdAt,
       });
-    } catch (emailError) {
-      console.error("[Email Notification Warning]:", emailError);
+
+      if (!emailStatus.success) {
+        console.error("[Resend Email Error]:", emailStatus.error);
+      }
+    } catch (emailErr) {
+      console.error("[Resend Email Exception]:", emailErr);
     }
 
+    // 6. Return Success Response to User
     return NextResponse.json(
       {
         success: true,
         message: "Thank you! Your enquiry has been submitted successfully. We'll get back to you soon.",
-        ...(createdLeadId && { leadId: createdLeadId }),
+        ...(savedEnquiryId && { enquiryId: savedEnquiryId }),
       },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Lead API Error:", error);
+    console.error("[Server Error]:", error);
     return NextResponse.json(
       {
         success: false,

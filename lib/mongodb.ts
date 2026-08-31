@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI =
+  process.env.MONGODB_URI ||
+  process.env["MONGODB-URL"] ||
+  process.env.MONGODB_URL ||
+  "mongodb://localhost:27017/digiwebio";
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -18,11 +22,6 @@ if (!global.mongooseCache) {
 }
 
 export async function connectToDatabase(): Promise<typeof mongoose | null> {
-  if (!MONGODB_URI) {
-    // Graceful fallback when MONGODB_URI is not configured
-    return null;
-  }
-
   if (cached.conn) {
     return cached.conn;
   }
@@ -31,16 +30,17 @@ export async function connectToDatabase(): Promise<typeof mongoose | null> {
     const opts = {
       bufferCommands: false,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000, // 5s timeout to prevent hanging on offline DBs
+      serverSelectionTimeoutMS: 5000,
     };
 
     cached.promise = mongoose
       .connect(MONGODB_URI, opts)
       .then((mongooseInstance) => {
+        console.log(`[MongoDB Connected]: Successfully connected to ${MONGODB_URI}`);
         return mongooseInstance;
       })
       .catch((err) => {
-        console.warn("MongoDB connection error (using local data fallback):", err.message);
+        console.warn(`[MongoDB Warning]: Connection to ${MONGODB_URI} failed. Notice: ${err.message}`);
         cached.promise = null;
         return null;
       });

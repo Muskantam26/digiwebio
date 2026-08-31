@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send, CheckCircle2, AlertCircle, Loader2, Phone, Mail, MapPin } from "lucide-react";
 import { SITE_CONFIG, getWhatsAppUrl } from "@/lib/config";
-import { leadFormSchema, LeadFormInputs } from "@/lib/validation";
+import { enquiryFormSchema, EnquiryFormInputs } from "@/lib/validation";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,25 +19,24 @@ export default function ContactForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<LeadFormInputs>({
-    resolver: zodResolver(leadFormSchema),
+  } = useForm<EnquiryFormInputs>({
+    resolver: zodResolver(enquiryFormSchema),
     defaultValues: {
-      fullName: "",
+      name: "",
       email: "",
       phone: "",
       company: "",
       service: SITE_CONFIG.services[0],
-      budget: SITE_CONFIG.budgets[1],
-      description: "",
+      message: "",
     },
   });
 
-  const onSubmit = async (data: LeadFormInputs) => {
+  const onSubmit = async (data: EnquiryFormInputs) => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
-      const response = await fetch("/api/leads", {
+      const response = await fetch("/api/enquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -48,20 +47,20 @@ export default function ContactForm() {
       if (response.ok && result.success) {
         setSubmitStatus({
           success: true,
-          message: result.message || "Your project enquiry has been submitted successfully!",
+          message: "Thank you! Your enquiry has been submitted successfully. We'll get back to you soon.",
         });
         reset();
       } else {
         setSubmitStatus({
           success: false,
-          message: result.error || "Failed to submit enquiry. Please try again.",
+          message: result.error || "Something went wrong. Please try again.",
         });
       }
     } catch (err) {
       console.error(err);
       setSubmitStatus({
         success: false,
-        message: "An unexpected network error occurred. Please try contacting us on WhatsApp.",
+        message: "Something went wrong. Please try again.",
       });
     } finally {
       setIsSubmitting(false);
@@ -170,12 +169,12 @@ export default function ContactForm() {
                     Full Name <span className="text-[#E2F135]">*</span>
                   </label>
                   <input
-                    {...register("fullName")}
+                    {...register("name")}
                     placeholder="e.g. Rahul Sharma"
                     className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none transition-colors"
                   />
-                  {errors.fullName && (
-                    <p className="text-[11px] text-rose-400 mt-1">{errors.fullName.message}</p>
+                  {errors.name && (
+                    <p className="text-[11px] text-rose-400 mt-1">{errors.name.message}</p>
                   )}
                 </div>
 
@@ -226,60 +225,39 @@ export default function ContactForm() {
                 </div>
               </div>
 
-              {/* Row 3: Service Required & Budget */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                    Service Required <span className="text-[#E2F135]">*</span>
-                  </label>
-                  <select
-                    {...register("service")}
-                    className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition-colors"
-                  >
-                    {SITE_CONFIG.services.map((svc) => (
-                      <option key={svc} value={svc} className="bg-[#0A0B0D] text-white">
-                        {svc}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.service && (
-                    <p className="text-[11px] text-rose-400 mt-1">{errors.service.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                    Project Budget <span className="text-[#E2F135]">*</span>
-                  </label>
-                  <select
-                    {...register("budget")}
-                    className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition-colors"
-                  >
-                    {SITE_CONFIG.budgets.map((b) => (
-                      <option key={b} value={b} className="bg-[#0A0B0D] text-white">
-                        {b}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.budget && (
-                    <p className="text-[11px] text-rose-400 mt-1">{errors.budget.message}</p>
-                  )}
-                </div>
-              </div>
-
-              {/* Row 4: Description */}
+              {/* Row 3: Service Required */}
               <div>
                 <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                  Project Description <span className="text-[#E2F135]">*</span>
+                  Service Required <span className="text-[#E2F135]">*</span>
+                </label>
+                <select
+                  {...register("service")}
+                  className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition-colors"
+                >
+                  {SITE_CONFIG.services.map((svc) => (
+                    <option key={svc} value={svc} className="bg-[#0A0B0D] text-white">
+                      {svc}
+                    </option>
+                  ))}
+                </select>
+                {errors.service && (
+                  <p className="text-[11px] text-rose-400 mt-1">{errors.service.message}</p>
+                )}
+              </div>
+
+              {/* Row 4: Message */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                  Message / Project Details <span className="text-[#E2F135]">*</span>
                 </label>
                 <textarea
-                  {...register("description")}
+                  {...register("message")}
                   rows={4}
                   placeholder="Describe your project goals, scope, key features, or reference links..."
                   className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl p-4 text-xs text-white placeholder-slate-500 focus:outline-none transition-colors resize-none"
                 />
-                {errors.description && (
-                  <p className="text-[11px] text-rose-400 mt-1">{errors.description.message}</p>
+                {errors.message && (
+                  <p className="text-[11px] text-rose-400 mt-1">{errors.message.message}</p>
                 )}
               </div>
 

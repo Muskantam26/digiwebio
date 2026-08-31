@@ -21,7 +21,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: `${SITE_CONFIG.name} | Digital Technology Agency India`,
+    default: `${SITE_CONFIG.name} | Software Development Agency`,
     template: `%s | ${SITE_CONFIG.name}`,
   },
   description: SITE_CONFIG.description,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     apple: "/images/digiwebiologo-favicon.png",
   },
   openGraph: {
-    title: `${SITE_CONFIG.name} | Digital Technology Agency`,
+    title: `${SITE_CONFIG.name} | Software Development Agency`,
     description: SITE_CONFIG.description,
     url: SITE_CONFIG.url,
     siteName: SITE_CONFIG.name,
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         url: `${SITE_CONFIG.url}/digiwebiologo.jpeg`,
         width: 1200,
         height: 630,
-        alt: `${SITE_CONFIG.name} Digital Technology Agency`,
+        alt: `${SITE_CONFIG.name} Software Development Agency`,
       },
     ],
     locale: "en_IN",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_CONFIG.name} | Digital Technology Agency`,
+    title: `${SITE_CONFIG.name} | Software Development Agency`,
     description: SITE_CONFIG.description,
     images: [`${SITE_CONFIG.url}/digiwebiologo.jpeg`],
   },

@@ -1,22 +1,22 @@
 export const SITE_CONFIG = {
   name: "DigiWebIO",
-  legalName: "DigiWebIO Digital Technology Agency",
+  legalName: "DigiWebIO Software Development Agency",
   tagline: "Digital experiences built to move your business forward.",
   domain: "https://digiwebio.in",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://digiwebio.in",
-  description: "DigiWebIO is a premier Indian digital technology agency specializing in high-performance websites, custom web applications, mobile apps, UI/UX design, SEO, and enterprise software solutions.",
+  description: "DigiWebIO is a software development agency helping businesses build modern websites, web applications, e-commerce solutions, custom software and digital products.",
   keywords: [
-    "digital agency india",
+    "software development agency",
+    "software development company",
     "web development company",
     "website development",
     "web application development",
     "app development",
     "UI UX design",
+    "custom software development",
     "SEO services india",
     "digital marketing",
     "ecommerce development",
-    "data analytics",
-    "custom software development",
     "ERP dashboard development"
   ],
   contact: {

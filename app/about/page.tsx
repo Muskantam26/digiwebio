@@ -7,9 +7,9 @@ import ContactForm from "@/components/sections/ContactForm";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata = generatePageMetadata({
-  title: "About Us | DigiWebIO Agency Story & Vision",
+  title: "About Us | DigiWebIO Software Development Agency",
   description:
-    "Learn how DigiWebIO helps Indian and global businesses transform their ideas into modern digital products, Next.js web applications, and high-converting websites.",
+    "DigiWebIO was founded by Muskan Tamrakar, a Full-Stack Web Developer focused on helping businesses build modern websites, web applications and custom digital solutions.",
   path: "/about",
 });
 
@@ -22,13 +22,13 @@ export default function AboutPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E2F135] mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-[#E2F135]" />
-              Our Agency Story
+              Our Founder & Agency Story
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-6">
               Engineering digital products that redefine industry benchmarks.
             </h1>
             <p className="text-base text-slate-300 leading-relaxed mb-8">
-              DigiWebIO was founded to eliminate bloated, template-based websites and slow legacy software. We build bespoke full-stack applications with modern web technology, intentional visual design, and clean architecture.
+              DigiWebIO was founded by Muskan Tamrakar, a Full-Stack Web Developer focused on helping businesses build modern websites, web applications and custom digital solutions.
             </p>
             <div className="flex items-center gap-4">
               <Link

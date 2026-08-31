@@ -299,10 +299,10 @@ export const TEAM_MEMBERS_DATA: TeamMemberItem[] = [
   {
     id: "founder",
     name: "Muskan Tamrakar",
-    role: "Founder & Full-Stack Developer",
+    role: "Founder & Full-Stack Web Developer",
     initials: "MT",
     photo: "/images/founder-muskan.png",
-    bio: "I build digital experiences that combine clean design, practical technology, and real business needs.",
+    bio: "DigiWebIO was founded by Muskan Tamrakar, a Full-Stack Web Developer focused on helping businesses build modern websites, web applications and custom digital solutions.",
     isFounder: true,
     expertise: ["Web Development", "UI/UX", "Full-Stack Development"],
     iconName: "User"

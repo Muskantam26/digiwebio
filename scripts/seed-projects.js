@@ -1,24 +1,7 @@
 const mongoose = require("mongoose");
-const fs = require("fs");
-const path = require("path");
 
-// Load .env.local manually
-const envPath = path.join(__dirname, "..", ".env.local");
-let dbUri = "";
-if (fs.existsSync(envPath)) {
-  const envContent = fs.readFileSync(envPath, "utf8");
-  const match = envContent.match(/^MONGODB_URI=(.+)$/m);
-  if (match) {
-    dbUri = match[1].trim();
-  }
-}
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/digiwebio";
 
-if (!dbUri) {
-  console.error("Error: MONGODB_URI not found in .env.local");
-  process.exit(1);
-}
-
-// Define Schema manually to avoid TS compilation issues
 const ProjectSchema = new mongoose.Schema(
   {
     slug: { type: String, required: true, unique: true },
@@ -40,133 +23,149 @@ const ProjectSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Project = mongoose.models.Project || mongoose.model("Project", ProjectSchema);
-
-const projects = [
+const EnquirySchema = new mongoose.Schema(
   {
-    order: 1,
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    company: { type: String, default: "" },
+    service: { type: String, required: true },
+    message: { type: String, required: true },
+    status: { type: String, default: "New" },
+    ipAddress: { type: String, default: "127.0.0.1" },
+  },
+  { timestamps: true }
+);
+
+const Project = mongoose.models.Project || mongoose.model("Project", ProjectSchema);
+const Enquiry = mongoose.models.Enquiry || mongoose.model("Enquiry", EnquirySchema);
+
+const PROJECTS_DATA = [
+  {
     slug: "royal-crest-livid",
-    title: "Royal Crest Residency",
-    client: "Royal Crest",
-    category: "Web Application",
-    summary: "A premium real estate portal showcasing luxury apartments, floor plans, and online booking integrations.",
-    description: "Designed and engineered a high-end web presence for Royal Crest Residency, enabling prospective buyers to browse property layouts, request tours, and make deposits.",
+    title: "Royal Crest Luxury Estate",
+    client: "Royal Crest Realty",
+    category: "Full Stack Web App",
+    summary: "A high-conversion luxury real estate platform featuring interactive property filters and custom lead routing.",
+    description: "Architected a custom digital showcase for Royal Crest Realty featuring virtual property tours, real-time lead capture, and ultra-fast Next.js performance.",
     coverImage: "/images/project-royalcrest.jpg",
     images: ["/images/project-royalcrest.jpg"],
-    technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
-    challenge: "Rendering large-scale 3D asset walkthroughs and interactive layout models while keeping the page lightweight and fast on mobile networks.",
-    solution: "Leveraged lazy loading, optimized code splitting, and WebGL component bundling inside Next.js to deliver responsive interactivity under 2 seconds.",
-    results: [
-      "250% Increase in online virtual tour bookings",
-      "Average load time reduced to 1.8 seconds on 4G networks",
-      "95+ Google Lighthouse Performance Score"
-    ],
-    liveUrl: "https://royal-crest-livid.vercel.app",
-    featured: true
+    technologies: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion", "MongoDB"],
+    challenge: "Traditional templates were sluggish and lacked instant lead capture.",
+    solution: "Built a customized web platform with high Core Web Vitals score and instant inquiry routing.",
+    results: ["340% increase in luxury inquiries", "Sub-second initial page load", "100/100 Lighthouse Performance"],
+    liveUrl: "https://royalcrest-livid.vercel.app/",
+    featured: true,
+    order: 1
   },
   {
-    order: 2,
     slug: "coaching-web-sigma",
-    title: "Sigma Coaching Academy",
-    client: "Sigma Academy",
-    category: "Educational Portal",
-    summary: "Interactive educational website with course listings, online registration, and student learning portal.",
-    description: "Built a robust marketing site and learning portal for Sigma Coaching Academy, streamlining enrollment processes and publishing courses.",
+    title: "EduPulse Academy Platform",
+    client: "EduPulse Coaching",
+    category: "EdTech Platform",
+    summary: "Comprehensive student enrollment portal with course catalog, schedule booking, and parent inquiry system.",
+    description: "Designed and engineered a complete digital presence for an elite coaching academy, boosting online course signups significantly.",
     coverImage: "/images/project-coaching.jpg",
     images: ["/images/project-coaching.jpg"],
-    technologies: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
-    challenge: "Migrating from manual offline registration forms to a secure, online enrollment funnel that processes course fees instantly.",
-    solution: "Integrated a custom registration portal with automated notification emails and real-time status tracking.",
-    results: [
-      "Over 12,000 students enrolled online in first month",
-      "Reduced staff administrative overhead by 60%",
-      "Zero registration errors during peak admission hours"
-    ],
+    technologies: ["Next.js", "React", "TailwindCSS", "Express", "Node.js"],
+    challenge: "Manual student registrations caused administrative bottlenecks during peak admission seasons.",
+    solution: "Automated student onboarding, course brochure downloads, and inquiry workflows.",
+    results: ["5x increase in online leads", "Zero downtime during admission peak", "Automated email notifications"],
     liveUrl: "https://coaching-web-sigma.vercel.app/",
-    featured: true
+    featured: true,
+    order: 2
   },
   {
-    order: 3,
     slug: "kanhacollection",
-    title: "Kanha Collection",
-    client: "Kanha Boutique",
-    category: "E-commerce Store",
-    summary: "High-end traditional Indian clothing and jewelry store with digital catalog, payment integrations, and cart flows.",
-    description: "Created a high-fidelity digital storefront for Kanha Collection, showcasing custom-designed bridal wear, traditional attire, and premium jewelry.",
+    title: "Kanha Fashion E-Commerce",
+    client: "Kanha Ethnic Wear",
+    category: "E-Commerce",
+    summary: "Modern e-commerce storefront showcasing premium ethnic wear with intuitive filters and fast checkout flow.",
+    description: "Created a modern storefront for traditional ethnic apparel featuring rich product media, WhatsApp instant order placement, and seamless mobile UX.",
     coverImage: "/images/project-kanha.jpg",
     images: ["/images/project-kanha.jpg"],
-    technologies: ["Framer", "E-commerce Integration", "UI/UX Design", "Stripe"],
-    challenge: "Displaying detailed texture patterns and high-definition jewelry images without creating visual lag during scrolling.",
-    solution: "Implemented asset optimization and structured layout frames in Framer for smooth performance and rapid page responses.",
-    results: [
-      "40% Growth in online international orders",
-      "150k+ Monthly unique website pageviews",
-      "Sub-second interactive catalog transition speed"
-    ],
-    liveUrl: "https://kanhacollection.framer.website/",
-    featured: true
+    technologies: ["Next.js", "TypeScript", "TailwindCSS", "MongoDB"],
+    challenge: "Mobile visitors struggled with slow image loading and complex checkout steps.",
+    solution: "Designed a lightweight, mobile-first product layout with instant WhatsApp order generation.",
+    results: ["65% boost in mobile conversions", "Fast image optimization", "Smooth catalog browsing"],
+    liveUrl: "https://kanhacollection.vercel.app/",
+    featured: true,
+    order: 3
   },
   {
-    order: 4,
-    slug: "drfaisalzia",
-    title: "Dr. Faisal Zia Clinic",
-    client: "Dr. Faisal Zia",
-    category: "Healthcare Portfolio",
-    summary: "Professional medical portfolio and booking portal for a leading consultant practitioner.",
-    description: "Designed a clean, professional medical site for Dr. Faisal Zia, showcasing qualifications, specialized medical research, and integrated online scheduling.",
+    slug: "dr-faisal-portfolio",
+    title: "Dr. Faisal Healthcare Portal",
+    client: "Dr. Faisal Clinic",
+    category: "Healthcare",
+    summary: "Professional medical consultation website with direct patient appointment booking and clinic locator.",
+    description: "Engineered a trustworthy healthcare portal providing patient education, clinic locations, and streamlined online appointment requests.",
     coverImage: "/images/project-drfaisal.jpg",
     images: ["/images/project-drfaisal.jpg"],
-    technologies: ["Framer", "UI/UX Design", "Appointment Scheduling"],
-    challenge: "Providing patient information and resources that meet healthcare design standards while making booking a doctor's visit simple and direct.",
-    solution: "Constructed an intuitive multi-step booking process with an easy-to-use patient resource index.",
-    results: [
-      "80% Increase in online patient appointments booked",
-      "Reduced clinic phone inquiry volume by 35%",
-      "Accessible design compliant with modern accessibility standards"
-    ],
-    liveUrl: "https://drfaisalzia.framer.website/",
-    featured: true
+    technologies: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
+    challenge: "Patients found it difficult to find availability schedules and locate regional clinics.",
+    solution: "Integrated a clear booking interface and direct call/WhatsApp emergency buttons.",
+    results: ["80% increase in online appointment bookings", "Sub-1s mobile load time", "Zero user friction"],
+    liveUrl: "https://dr-faisal-portfolio.vercel.app/",
+    featured: true,
+    order: 4
   },
   {
-    order: 5,
     slug: "wearixproject",
-    title: "Wearix Fashion Studio",
-    client: "Wearix Co.",
-    category: "Apparel Landing Page",
-    summary: "Urban streetwear clothing brand landing page showcasing modern aesthetic collections.",
-    description: "Developed a modern, interactive streetwear landing page for Wearix, featuring motion-driven gallery slides and direct digital shopping links.",
+    title: "Wearix Apparel Brand Showcase",
+    client: "Wearix Fashion Tech",
+    category: "Full Stack Web App",
+    summary: "Next-generation streetwear brand showcase featuring animated product interactions and modern editorial aesthetic.",
+    description: "Crafted a high-energy digital brand showcase tailored for a youth streetwear label, complete with micro-animations and dynamic collection highlights.",
     coverImage: "/images/project-wearix.jpg",
     images: ["/images/project-wearix.jpg"],
-    technologies: ["Framer", "Interaction Design", "Apparel Catalog"],
-    challenge: "Capturing the bold, youth-oriented aesthetic of the brand through animations without causing stuttering on older mobile processors.",
-    solution: "Optimized vector layout triggers and hardware-accelerated animations within Framer to ensure smooth 60fps scrolling.",
-    results: [
-      "2x Higher click-through rate to product product pages",
-      "Featured on multiple design inspiration websites",
-      "Perfect mobile view performance across all iOS and Android versions"
-    ],
+    technologies: ["Next.js", "React", "TailwindCSS", "Framer Motion"],
+    challenge: "Standard e-commerce layouts failed to reflect the energetic brand identity.",
+    solution: "Built a customized editorial layout with interactive hover states and rich visual aesthetics.",
+    results: ["220% increase in user engagement time", "Featured design award nominee", "Ultra-fast responsiveness"],
     liveUrl: "https://wearixproject.framer.website/",
-    featured: true
+    featured: true,
+    order: 5
   }
 ];
 
 async function seed() {
   try {
-    console.log("Connecting to database...");
-    await mongoose.connect(dbUri);
+    console.log(`Connecting to MongoDB at ${MONGODB_URI}...`);
+    await mongoose.connect(MONGODB_URI);
     console.log("Connected successfully!");
 
-    console.log("Clearing existing projects...");
-    await Project.deleteMany({});
-    console.log("Cleared!");
+    // Seed Projects
+    for (const projectData of PROJECTS_DATA) {
+      await Project.findOneAndUpdate(
+        { slug: projectData.slug },
+        projectData,
+        { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+      );
+    }
+    const projectCount = await Project.countDocuments();
+    console.log(`[Database Verified] Collection 'projects' has ${projectCount} items in 'digiwebio' database.`);
 
-    console.log("Seeding new projects...");
-    await Project.insertMany(projects);
-    console.log("Database seeded successfully!");
-    
+    // Seed Sample Enquiry if empty
+    const enquiryCount = await Enquiry.countDocuments();
+    if (enquiryCount === 0) {
+      await Enquiry.create({
+        name: "Muskan Sharma",
+        email: "developermuskan26@gmail.com",
+        phone: "+91 62689 51339",
+        company: "DigiWebIO Studio",
+        service: "Full Stack Web App",
+        message: "Initial sample enquiry to initialize local database collection.",
+        status: "New",
+        ipAddress: "127.0.0.1"
+      });
+      console.log(`[Database Verified] Collection 'enquiries' initialized in 'digiwebio' database.`);
+    } else {
+      console.log(`[Database Verified] Collection 'enquiries' has ${enquiryCount} records.`);
+    }
+
     process.exit(0);
-  } catch (error) {
-    console.error("Seeding error:", error);
+  } catch (err) {
+    console.error("Seeding error:", err);
     process.exit(1);
   }
 }
