@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { usePathname, useSearchParams } from "next/navigation";
-import Script from "next/script";
-import { useEffect, useRef, Suspense } from "react";
-import { FB_PIXEL_ID, pageview } from "@/lib/fpixel";
+import Script from 'next/script';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useRef, Suspense } from 'react';
+import { FB_PIXEL_ID, pageview } from '@/lib/fpixel';
 
-function MetaPixelEvents() {
+function MetaPixelTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isFirstRender = useRef(true);
@@ -25,7 +25,7 @@ export default function MetaPixel() {
   return (
     <>
       <Script
-        id="fb-pixel"
+        id="meta-pixel"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
@@ -37,7 +37,6 @@ export default function MetaPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-
             fbq('init', '${FB_PIXEL_ID}');
             fbq('track', 'PageView');
           `,
@@ -47,13 +46,13 @@ export default function MetaPixel() {
         <img
           height="1"
           width="1"
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
           alt=""
         />
       </noscript>
       <Suspense fallback={null}>
-        <MetaPixelEvents />
+        <MetaPixelTracker />
       </Suspense>
     </>
   );

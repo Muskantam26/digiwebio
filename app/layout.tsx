@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
-import MetaPixel from "@/components/layout/MetaPixel";
+import MetaPixel from "@/components/MetaPixel";
 import { SITE_CONFIG } from "@/lib/config";
 import { getOrganizationJsonLd, getPersonJsonLd, getLocalBusinessJsonLd } from "@/lib/seo";
 
