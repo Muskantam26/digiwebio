@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Send, CheckCircle2, AlertCircle, Loader2, Phone, Mail, MapPin } from "lucide-react";
 import { SITE_CONFIG, getWhatsAppUrl } from "@/lib/config";
 import { enquiryFormSchema, EnquiryFormInputs } from "@/lib/validation";
+import { event as fbEvent } from "@/lib/fpixel";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,6 +46,9 @@ export default function ContactForm() {
       const result = await response.json();
 
       if (response.ok && result.success) {
+        // Fire Meta Pixel Lead event strictly after successful submission
+        fbEvent("Lead");
+
         setSubmitStatus({
           success: true,
           message: "Thank you! Your enquiry has been submitted successfully. We'll get back to you soon.",

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
+import MetaPixel from "@/components/layout/MetaPixel";
 import { SITE_CONFIG } from "@/lib/config";
 import { getOrganizationJsonLd, getPersonJsonLd, getLocalBusinessJsonLd } from "@/lib/seo";
 
@@ -96,6 +97,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[#0A0B0D] text-[#F5F7FA] font-sans selection:bg-[#E2F135] selection:text-[#0A0B0D]">
+        <MetaPixel />
         <Navbar />
         <main className="flex-1 pt-20">{children}</main>
         <Footer />
