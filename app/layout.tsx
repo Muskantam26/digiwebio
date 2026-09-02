@@ -5,7 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
 import { SITE_CONFIG } from "@/lib/config";
-import { getOrganizationJsonLd, getLocalBusinessJsonLd } from "@/lib/seo";
+import { getOrganizationJsonLd, getPersonJsonLd, getLocalBusinessJsonLd } from "@/lib/seo";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -21,11 +21,14 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: `${SITE_CONFIG.name} | Software Development Agency`,
+    default: "DigiWebIO | Web Development & Digital Solutions",
     template: `%s | ${SITE_CONFIG.name}`,
   },
   description: SITE_CONFIG.description,
   keywords: SITE_CONFIG.keywords,
+  authors: [{ name: "Muskan Tamrakar", url: SITE_CONFIG.url }],
+  creator: "Muskan Tamrakar",
+  publisher: "DigiWebIO",
   metadataBase: new URL(SITE_CONFIG.url),
   alternates: {
     canonical: SITE_CONFIG.url,
@@ -36,7 +39,7 @@ export const metadata: Metadata = {
     apple: "/images/digiwebiologo-favicon.png",
   },
   openGraph: {
-    title: `${SITE_CONFIG.name} | Software Development Agency`,
+    title: "DigiWebIO | Web Development & Digital Solutions",
     description: SITE_CONFIG.description,
     url: SITE_CONFIG.url,
     siteName: SITE_CONFIG.name,
@@ -45,7 +48,7 @@ export const metadata: Metadata = {
         url: `${SITE_CONFIG.url}/digiwebiologo.jpeg`,
         width: 1200,
         height: 630,
-        alt: `${SITE_CONFIG.name} Software Development Agency`,
+        alt: `${SITE_CONFIG.name} Web Development & Digital Solutions`,
       },
     ],
     locale: "en_IN",
@@ -53,7 +56,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_CONFIG.name} | Software Development Agency`,
+    title: "DigiWebIO | Web Development & Digital Solutions",
     description: SITE_CONFIG.description,
     images: [`${SITE_CONFIG.url}/digiwebiologo.jpeg`],
   },
@@ -69,6 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const orgJsonLd = getOrganizationJsonLd();
+  const personJsonLd = getPersonJsonLd();
   const businessJsonLd = getLocalBusinessJsonLd();
 
   return (
@@ -81,6 +85,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <script
           type="application/ld+json"

@@ -9,7 +9,7 @@ import { generatePageMetadata } from "@/lib/seo";
 export const metadata = generatePageMetadata({
   title: "About Us | DigiWebIO Software Development Agency",
   description:
-    "DigiWebIO was founded by Muskan Tamrakar, a Full-Stack Web Developer focused on helping businesses build modern websites, web applications and custom digital solutions.",
+    "DigiWebIO was founded by Muskan Tamrakar with a simple vision — to help businesses build a stronger digital presence through thoughtful design, modern technology, and reliable digital solutions.",
   path: "/about",
 });
 
@@ -22,14 +22,27 @@ export default function AboutPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E2F135] mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-[#E2F135]" />
-              Our Founder & Agency Story
+              OUR FOUNDER & AGENCY STORY
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-6">
-              Engineering digital products that redefine industry benchmarks.
+              Building digital experiences that help businesses move forward.
             </h1>
-            <p className="text-base text-slate-300 leading-relaxed mb-8">
-              DigiWebIO was founded by Muskan Tamrakar, a Full-Stack Web Developer focused on helping businesses build modern websites, web applications and custom digital solutions.
+            <div className="space-y-4 text-base text-slate-300 leading-relaxed mb-8">
+              <p>
+                DigiWebIO was founded by <strong className="text-white font-semibold">Muskan Tamrakar</strong> with a simple vision — to help businesses build a stronger digital presence through thoughtful design, modern technology, and reliable digital solutions.
+              </p>
+              <p>
+                What started with a passion for web development has grown into a digital agency focused on creating <strong className="text-white font-semibold">high-performance websites, custom web solutions, intuitive user experiences, and scalable digital products</strong>.
+              </p>
+              <p>
+                At DigiWebIO, we combine creativity with engineering to turn ideas into digital experiences that are built to perform, grow, and make a lasting impression.
+              </p>
+            </div>
+
+            <p className="text-sm sm:text-base font-bold text-[#E2F135] mb-8 font-mono">
+              Founded by Muskan Tamrakar. Built for businesses ready to grow.
             </p>
+
             <div className="flex items-center gap-4">
               <Link
                 href="/contact"

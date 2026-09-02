@@ -25,6 +25,9 @@ export function generatePageMetadata({
     title: metaTitle,
     description: metaDesc,
     keywords: combinedKeywords,
+    authors: [{ name: "Muskan Tamrakar", url: SITE_CONFIG.url }],
+    creator: "Muskan Tamrakar",
+    publisher: "DigiWebIO",
     metadataBase: new URL(SITE_CONFIG.url),
     alternates: {
       canonical: url,
@@ -39,7 +42,7 @@ export function generatePageMetadata({
           url: image,
           width: 1200,
           height: 630,
-          alt: `${SITE_CONFIG.name} Software Development Agency`,
+          alt: `${SITE_CONFIG.name} Web Development & Digital Solutions`,
         },
       ],
       locale: "en_IN",
@@ -70,6 +73,7 @@ export function getOrganizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${SITE_CONFIG.url}/#organization`,
     name: SITE_CONFIG.name,
     legalName: SITE_CONFIG.legalName,
     url: SITE_CONFIG.url,
@@ -77,13 +81,9 @@ export function getOrganizationJsonLd() {
     description: SITE_CONFIG.description,
     founder: {
       "@type": "Person",
+      "@id": `${SITE_CONFIG.url}/#founder`,
       name: "Muskan Tamrakar",
-      jobTitle: "Founder & Full-Stack Web Developer",
-      worksFor: {
-        "@type": "Organization",
-        name: SITE_CONFIG.name,
-        url: SITE_CONFIG.url,
-      },
+      jobTitle: "Founder",
     },
     address: {
       "@type": "PostalAddress",
@@ -106,6 +106,30 @@ export function getOrganizationJsonLd() {
       SITE_CONFIG.social.github,
       SITE_CONFIG.social.instagram,
     ],
+  };
+}
+
+export function getPersonJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${SITE_CONFIG.url}/#founder`,
+    name: "Muskan Tamrakar",
+    jobTitle: "Founder",
+    description: "Muskan Tamrakar is a web developer and digital solutions entrepreneur, and the founder of DigiWebIO.",
+    url: SITE_CONFIG.url,
+    worksFor: {
+      "@type": "Organization",
+      "@id": `${SITE_CONFIG.url}/#organization`,
+      name: SITE_CONFIG.name,
+      url: SITE_CONFIG.url,
+    },
+    founderOf: {
+      "@type": "Organization",
+      "@id": `${SITE_CONFIG.url}/#organization`,
+      name: SITE_CONFIG.name,
+      url: SITE_CONFIG.url,
+    },
   };
 }
 

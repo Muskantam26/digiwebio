@@ -10,9 +10,9 @@ import ContactForm from "@/components/sections/ContactForm";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata = generatePageMetadata({
-  title: "DigiWebIO | Software Development Agency",
+  title: "DigiWebIO | Web Development & Digital Solutions",
   description:
-    "DigiWebIO is a software development agency helping businesses build modern websites, web applications, e-commerce solutions, custom software and digital products.",
+    "DigiWebIO is a web development agency founded by Muskan Tamrakar, offering high-performance website development, web applications, e-commerce solutions, and custom digital products.",
   path: "/",
 });
 
