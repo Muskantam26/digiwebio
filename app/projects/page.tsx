@@ -3,7 +3,7 @@ import ContactForm from "@/components/sections/ContactForm";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata = generatePageMetadata({
-  title: "Projects & Portfolio | DigiWebIO Engineering Case Studies",
+  title: "Our Projects & Portfolio | DigiWebIO Engineering Case Studies",
   description:
     "Explore DigiWebIO's portfolio of custom web applications, e-commerce storefronts, mobile apps, and enterprise ERP solutions.",
   path: "/projects",

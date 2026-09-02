@@ -32,13 +32,13 @@ export default function TeamSection() {
         <div className="max-w-3xl mb-16 text-left">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E2F135] mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-[#E2F135]" />
-            MEET OUR TEAM
+            MEET THE TEAM
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            A Small Team With Big Ideas.
+            Built by people who care about the details.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
-            &ldquo;We bring together development, design, and social media expertise to create digital experiences that help businesses move forward.&rdquo;
+            From development and UI/UX to digital growth, we bring the right expertise together for every project — with a focus on quality, performance, and the goals that matter to our clients.
           </p>
         </div>
 
@@ -56,7 +56,7 @@ export default function TeamSection() {
             <div className="flex items-center justify-between mb-8">
               <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#E2F135] bg-[#E2F135]/10 border border-[#E2F135]/30 px-3 py-1 rounded-full flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
-                FOUNDER & LEAD
+                FOUNDER
               </span>
               <span className="text-xs font-mono text-slate-500">DIGIWEBIO</span>
             </div>

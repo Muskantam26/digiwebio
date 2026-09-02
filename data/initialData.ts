@@ -299,10 +299,10 @@ export const TEAM_MEMBERS_DATA: TeamMemberItem[] = [
   {
     id: "founder",
     name: "Muskan Tamrakar",
-    role: "Founder & Full-Stack Web Developer",
+    role: "Founder & Web Developer",
     initials: "MT",
-    photo: "/images/founder-muskan.png",
-    bio: "DigiWebIO was founded by Muskan Tamrakar, a web developer and digital solutions entrepreneur.",
+    photo: "/images/muskantamfounder.jpeg",
+    bio: "DigiWebIO was founded by Muskan Tamrakar, a web developer .",
     isFounder: true,
     expertise: ["Web Development", "UI/UX", "Full-Stack Development"],
     iconName: "User"
@@ -363,8 +363,8 @@ export const BLOG_POSTS_DATA: BlogPostItem[] = [
     category: "Engineering",
     author: {
       name: "Muskan",
-      role: "Lead Full-Stack Architect",
-      avatar: "/images/team-muskan.jpg"
+      role: "Founder & Web Developer",
+      avatar: "/images/muskantamfounder.jpeg"
     },
     publishedAt: "2026-08-20",
     readTime: "6 min read",
@@ -393,7 +393,7 @@ export const BLOG_POSTS_DATA: BlogPostItem[] = [
     coverImage: "/images/blog-custom-code.jpg",
     category: "Strategy",
     author: {
-      name: "Arjun Mehta",
+      name: "Mukul",
       role: "Design Systems Engineer",
       avatar: "/images/team-arjun.jpg"
     },
@@ -421,7 +421,7 @@ export const BLOG_POSTS_DATA: BlogPostItem[] = [
     coverImage: "/images/blog-seo.jpg",
     category: "SEO & Growth",
     author: {
-      name: "Sneha Reddy",
+      name: "Sneha ",
       role: "SEO Specialist",
       avatar: "/images/team-sneha.jpg"
     },

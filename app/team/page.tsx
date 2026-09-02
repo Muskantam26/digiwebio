@@ -17,13 +17,13 @@ export default function TeamPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E2F135] mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-[#E2F135]" />
-              Engineering & Leadership Roster
+              THE TEAM BEHIND DIGIWEBIO
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-6">
-              The engineers & strategists building DigiWebIO.
+              Different skills. One shared vision.
             </h1>
             <p className="text-base text-slate-300 leading-relaxed">
-              We combine deep full-stack engineering expertise with user-centric design principles to build digital products that scale.
+              Great digital products are built when <strong className="text-white font-semibold">technology, design, and creativity</strong> work together. At DigiWebIO, our team brings these strengths together to create digital experiences that are purposeful, engaging, and built to grow.
             </p>
           </div>
         </div>
