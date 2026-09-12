@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
+import CommandPalette from "@/components/ui/CommandPalette";
 import MetaPixel from "@/components/MetaPixel";
 import { SITE_CONFIG } from "@/lib/config";
 import { getOrganizationJsonLd, getPersonJsonLd, getLocalBusinessJsonLd } from "@/lib/seo";
@@ -102,6 +103,7 @@ export default function RootLayout({
         <main className="flex-1 pt-20">{children}</main>
         <Footer />
         <WhatsAppFloat />
+        <CommandPalette />
       </body>
     </html>
   );

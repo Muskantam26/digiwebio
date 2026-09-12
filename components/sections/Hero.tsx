@@ -3,7 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Terminal, Sparkles } from "lucide-react";
+import { ArrowUpRight, Sparkles } from "lucide-react";
+import InteractiveGrid from "@/components/ui/InteractiveGrid";
+import TextScramble from "@/components/ui/TextScramble";
 
 const FLOATING_BADGES = [
   { label: "Next.js 16", sub: "Turbopack", color: "text-[#E2F135]", border: "border-[#E2F135]/40", top: "20%", left: "6%", yOffset: -8 },
@@ -14,7 +16,10 @@ const FLOATING_BADGES = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[92vh] flex flex-col items-center justify-center pt-28 pb-20 overflow-hidden bg-[#0A0B0D] bg-grid-pattern">
+    <section className="relative min-h-[92vh] flex flex-col items-center justify-center pt-28 pb-20 overflow-hidden bg-[#0A0B0D]">
+      {/* Interactive Bioluminescent Grid Background */}
+      <InteractiveGrid cellSize={42} />
+
       {/* Centered Logo Background Watermark */}
       <div className="absolute inset-0 z-0 opacity-25 pointer-events-none overflow-hidden flex items-center justify-center p-4">
         <div className="relative w-full max-w-6xl h-[550px] sm:h-[700px] lg:h-[800px] flex items-center justify-center">
@@ -70,31 +75,17 @@ export default function Hero() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
-        {/* Developer Terminal Eyebrow Pill */}
-        <motion.div
-          initial={{ opacity: 0, y: -15, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 bg-[#121316] border border-[#252830] hover:border-[#E2F135]/50 px-4 py-1.5 rounded-full mb-8 shadow-inner transition-colors"
-        >
-          <Terminal className="w-3.5 h-3.5 text-[#E2F135]" />
-          <span className="text-xs font-mono text-slate-300">
-            Full-Stack Engineering & Modern Web Architecture
-          </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#E2F135]" />
-        </motion.div>
-
         {/* Main Headline with Blur-Fade Reveal */}
         <motion.div
           initial={{ opacity: 0, y: 25, filter: "blur(10px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="flex flex-col items-center text-center"
+          transition={{ duration: 0.7 }}
+          className="flex flex-col items-center text-center mt-6"
         >
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6 max-w-3xl">
             We Build. We Design.{" "}
-            <span className="block mt-1 text-[#E2F135] drop-shadow-[0_0_35px_rgba(226,241,53,0.55)]">
-              We Grow.
+            <span className="block mt-1 text-[#E2F135] drop-shadow-[0_0_35px_rgba(226,241,53,0.55)] cursor-default">
+              <TextScramble text="We Grow." triggerOnHover={true} triggerOnMount={true} speed={40} />
             </span>
           </h1>
 
@@ -107,17 +98,17 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-6">
             <Link
               href="/start-project"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#E2F135] hover:bg-[#DFFF12] text-[#0A0B0D] font-bold text-sm sm:text-base px-9 py-4 rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(226,241,53,0.35)] hover:shadow-[0_0_40px_rgba(226,241,53,0.5)] hover:scale-105 cursor-pointer"
+              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2.5 bg-[#E2F135] hover:bg-[#DFFF12] text-[#0A0B0D] font-bold text-sm sm:text-base px-9 py-4 rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(226,241,53,0.35)] hover:shadow-[0_0_40px_rgba(226,241,53,0.5)] hover:scale-105 cursor-pointer"
             >
-              <span>Start a Project</span>
-              <ArrowUpRight className="w-4.5 h-4.5 stroke-[2.5]" />
+              <TextScramble text="Start a Project" triggerOnHover={true} speed={25} />
+              <ArrowUpRight className="w-4.5 h-4.5 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
             <Link
               href="/projects"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#121316]/90 hover:bg-[#191B20] text-white border border-[#252830] hover:border-[#E2F135]/60 font-semibold text-sm sm:text-base px-9 py-4 rounded-full transition-all duration-300 shadow-lg cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-[#E2F135]" />
-              <span>Explore Case Studies</span>
+              <TextScramble text="Explore Case Studies" triggerOnHover={true} speed={25} />
             </Link>
           </div>
         </motion.div>

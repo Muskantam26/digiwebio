@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Terminal, Copy, Check, Sparkles, Cpu, Layers } from "lucide-react";
+import { Terminal, Copy, Check, Cpu } from "lucide-react";
 import SpotlightCard from "@/components/ui/SpotlightCard";
+import OrbitalConstellation from "@/components/ui/OrbitalConstellation";
 
 const MARQUEE_TECH = [
   "Next.js 16",
@@ -78,9 +78,12 @@ export default function TechStackShowcase() {
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
           Production-grade architecture with zero compromises.
         </h2>
-        <p className="text-sm text-slate-300 max-w-2xl mx-auto mb-10">
+        <p className="text-sm text-slate-300 max-w-2xl mx-auto mb-6">
           Every project is built with strict typing, server-side caching, sub-second TTFB, and modular codebases designed for effortless scaling.
         </p>
+
+        {/* Interactive 3D Orbital Rings (Tech Constellation) */}
+        <OrbitalConstellation />
 
         {/* Developer CLI Command Banner */}
         <div className="inline-flex items-center gap-3 bg-[#121316] border border-[#252830] hover:border-[#E2F135]/40 px-4 py-2.5 rounded-xl mb-14 shadow-lg text-left transition-colors">
