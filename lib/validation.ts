@@ -27,6 +27,7 @@ export const enquiryFormSchema = z.object({
   company: z
     .string()
     .max(100, "Company name cannot exceed 100 characters")
+    .optional()
     .or(z.literal("")),
   service: z
     .string()
@@ -38,6 +39,43 @@ export const enquiryFormSchema = z.object({
 });
 
 export type EnquiryFormInputs = z.infer<typeof enquiryFormSchema>;
+
+export const projectInquirySchema = z.object({
+  fullName: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name cannot exceed 100 characters"),
+  email: z
+    .string()
+    .email("Please enter a valid email address"),
+  phone: z
+    .string()
+    .min(8, "Phone number must be at least 8 digits")
+    .max(20, "Phone number cannot exceed 20 characters")
+    .regex(/^[0-9+\s\-()]+$/, "Phone number contains invalid characters"),
+  company: z
+    .string()
+    .max(100, "Company name cannot exceed 100 characters")
+    .optional()
+    .or(z.literal("")),
+  service: z
+    .string()
+    .min(1, "Please select at least one service/need"),
+  budget: z
+    .string()
+    .optional()
+    .or(z.literal("")),
+  timeline: z
+    .string()
+    .optional()
+    .or(z.literal("")),
+  description: z
+    .string()
+    .min(10, "Project description must be at least 10 characters")
+    .max(3000, "Description cannot exceed 3000 characters"),
+});
+
+export type ProjectInquiryInputs = z.infer<typeof projectInquirySchema>;
 
 export const leadFormSchema = z.object({
   fullName: z

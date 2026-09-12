@@ -27,13 +27,18 @@ export async function POST(req: NextRequest) {
     // 2. Parse request JSON body
     const body = await req.json();
 
+    const extraDetails: string[] = [];
+    if (body.budget) extraDetails.push(`Budget: ${body.budget}`);
+    if (body.timeline) extraDetails.push(`Timeline: ${body.timeline}`);
+    const metaPrefix = extraDetails.length > 0 ? `[${extraDetails.join(" | ")}]\n\n` : "";
+
     const rawData = {
       name: body.name || body.fullName || "",
       email: body.email || "",
       phone: body.phone || "",
       company: body.company || "",
       service: body.service || "General Software Enquiry",
-      message: body.message || body.description || "",
+      message: `${metaPrefix}${body.message || body.description || ""}`.trim(),
     };
 
     // 3. Server-side validation via Zod

@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/projects",
     "/team",
     "/contact",
+    "/start-project",
     "/blog",
     "/privacy-policy",
     "/terms",

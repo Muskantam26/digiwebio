@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send, CheckCircle2, AlertCircle, Loader2, Phone, Mail, MapPin } from "lucide-react";
+import gsap from "gsap";
 import { SITE_CONFIG, getWhatsAppUrl } from "@/lib/config";
 import { enquiryFormSchema, EnquiryFormInputs } from "@/lib/validation";
 
@@ -13,6 +14,38 @@ export default function ContactForm() {
     success: boolean;
     message: string;
   } | null>(null);
+
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.from(".contact-info-block", {
+        opacity: 0,
+        x: -25,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: "power2.out",
+      });
+      gsap.from(".contact-form-card", {
+        opacity: 0,
+        y: 25,
+        duration: 0.8,
+        ease: "power3.out",
+        delay: 0.15,
+      });
+      gsap.from(".contact-field", {
+        opacity: 0,
+        y: 12,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: "power2.out",
+        delay: 0.3,
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const {
     register,
@@ -39,7 +72,10 @@ export default function ContactForm() {
       const response = await fetch("/api/enquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          company: "", // Normal contact form omits company
+        }),
       });
 
       const result = await response.json();
@@ -47,7 +83,7 @@ export default function ContactForm() {
       if (response.ok && result.success) {
         setSubmitStatus({
           success: true,
-          message: "Thank you! Your enquiry has been submitted successfully. We'll get back to you soon.",
+          message: "Thank you! Your message has been sent successfully. We'll get back to you shortly.",
         });
         reset();
       } else {
@@ -68,25 +104,25 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-20 bg-[#0A0B0D] relative" id="contact">
+    <section ref={sectionRef} className="py-20 bg-[#0A0B0D] relative" id="contact">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Information Column */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E2F135] mb-2">
+              <div className="contact-info-block inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E2F135] mb-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#E2F135]" />
-                Start A Conversation
+                Get In Touch
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-6">
-                Tell us about your project requirements.
+              <h2 className="contact-info-block text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-6">
+                We&apos;d love to hear from you.
               </h2>
-              <p className="text-sm text-slate-300 leading-relaxed mb-8">
-                Whether you need a full-stack Next.js web application, a modern e-commerce storefront, custom ERP software, or SEO growth strategy—our team is ready to assist.
+              <p className="contact-info-block text-sm text-slate-300 leading-relaxed mb-8">
+                Have questions about our digital services, need technical advice, or looking to discuss an upcoming initiative? Reach out to us directly or drop us a message.
               </p>
 
               <div className="space-y-6">
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-[#121316] border border-[#252830]">
+                <div className="contact-info-block flex items-start gap-4 p-4 rounded-xl bg-[#121316] border border-[#252830]">
                   <div className="w-10 h-10 rounded-lg bg-[#191B20] text-[#E2F135] flex items-center justify-center shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
@@ -98,7 +134,7 @@ export default function ContactForm() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-[#121316] border border-[#252830]">
+                <div className="contact-info-block flex items-start gap-4 p-4 rounded-xl bg-[#121316] border border-[#252830]">
                   <div className="w-10 h-10 rounded-lg bg-[#191B20] text-[#E2F135] flex items-center justify-center shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
@@ -110,7 +146,7 @@ export default function ContactForm() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-[#121316] border border-[#252830]">
+                <div className="contact-info-block flex items-start gap-4 p-4 rounded-xl bg-[#121316] border border-[#252830]">
                   <div className="w-10 h-10 rounded-lg bg-[#191B20] text-[#E2F135] flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5" />
                   </div>
@@ -125,7 +161,7 @@ export default function ContactForm() {
             </div>
 
             {/* Quick WhatsApp fallback button */}
-            <div className="mt-8 pt-6 border-t border-[#252830]">
+            <div className="contact-info-block mt-8 pt-6 border-t border-[#252830]">
               <p className="text-xs text-slate-400 mb-3">Prefer instant messaging?</p>
               <a
                 href={getWhatsAppUrl()}
@@ -140,9 +176,9 @@ export default function ContactForm() {
           </div>
 
           {/* Right Form Column */}
-          <div className="lg:col-span-7 bg-[#121316] border border-[#252830] rounded-3xl p-6 sm:p-10 shadow-2xl">
-            <h3 className="text-xl font-bold text-white mb-2">Project Enquiry Form</h3>
-            <p className="text-xs text-slate-400 mb-8">Fill out the details below for a customized project proposal and time estimate.</p>
+          <div className="contact-form-card lg:col-span-7 bg-[#121316] border border-[#252830] rounded-3xl p-6 sm:p-10 shadow-2xl">
+            <h3 className="text-xl font-bold text-white mb-2">Send Us a Message</h3>
+            <p className="text-xs text-slate-400 mb-8">Fill out the form below and we will get back to you within 24 hours.</p>
 
             {submitStatus && (
               <div
@@ -164,7 +200,7 @@ export default function ContactForm() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Row 1: Name & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
+                <div className="contact-field">
                   <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
                     Full Name <span className="text-[#E2F135]">*</span>
                   </label>
@@ -178,14 +214,14 @@ export default function ContactForm() {
                   )}
                 </div>
 
-                <div>
+                <div className="contact-field">
                   <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
                     Email Address <span className="text-[#E2F135]">*</span>
                   </label>
                   <input
                     {...register("email")}
                     type="email"
-                    placeholder="e.g. rahul@company.com"
+                    placeholder="e.g. rahul@example.com"
                     className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none transition-colors"
                   />
                   {errors.email && (
@@ -194,9 +230,9 @@ export default function ContactForm() {
                 </div>
               </div>
 
-              {/* Row 2: Phone & Company */}
+              {/* Row 2: Phone & Service/Topic */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
+                <div className="contact-field">
                   <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
                     Phone Number <span className="text-[#E2F135]">*</span>
                   </label>
@@ -210,50 +246,35 @@ export default function ContactForm() {
                   )}
                 </div>
 
-                <div>
+                <div className="contact-field">
                   <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                    Company / Business Name
+                    Topic / Service <span className="text-[#E2F135]">*</span>
                   </label>
-                  <input
-                    {...register("company")}
-                    placeholder="e.g. DigiCorp Pvt Ltd"
-                    className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none transition-colors"
-                  />
-                  {errors.company && (
-                    <p className="text-[11px] text-rose-400 mt-1">{errors.company.message}</p>
+                  <select
+                    {...register("service")}
+                    className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition-colors"
+                  >
+                    {SITE_CONFIG.services.map((svc) => (
+                      <option key={svc} value={svc} className="bg-[#0A0B0D] text-white">
+                        {svc}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.service && (
+                    <p className="text-[11px] text-rose-400 mt-1">{errors.service.message}</p>
                   )}
                 </div>
               </div>
 
-              {/* Row 3: Service Required */}
-              <div>
+              {/* Row 3: Send Message / Your Message */}
+              <div className="contact-field">
                 <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                  Service Required <span className="text-[#E2F135]">*</span>
-                </label>
-                <select
-                  {...register("service")}
-                  className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl px-4 py-3 text-xs text-white focus:outline-none transition-colors"
-                >
-                  {SITE_CONFIG.services.map((svc) => (
-                    <option key={svc} value={svc} className="bg-[#0A0B0D] text-white">
-                      {svc}
-                    </option>
-                  ))}
-                </select>
-                {errors.service && (
-                  <p className="text-[11px] text-rose-400 mt-1">{errors.service.message}</p>
-                )}
-              </div>
-
-              {/* Row 4: Message */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                  Message / Project Details <span className="text-[#E2F135]">*</span>
+                  Send Message <span className="text-[#E2F135]">*</span>
                 </label>
                 <textarea
                   {...register("message")}
-                  rows={4}
-                  placeholder="Describe your project goals, scope, key features, or reference links..."
+                  rows={5}
+                  placeholder="How can we help you? Write your message here..."
                   className="w-full bg-[#0A0B0D] border border-[#252830] focus:border-[#E2F135] rounded-xl p-4 text-xs text-white placeholder-slate-500 focus:outline-none transition-colors resize-none"
                 />
                 {errors.message && (
@@ -261,23 +282,25 @@ export default function ContactForm() {
                 )}
               </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-[#E2F135] hover:bg-[#DFFF12] text-[#0A0B0D] font-bold text-sm py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#E2F135]/15 hover:scale-[1.01] disabled:opacity-50"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Submitting Enquiry...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Submit Project Enquiry</span>
-                    <Send className="w-4 h-4" />
-                  </>
-                )}
-              </button>
+              <div className="contact-field">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#E2F135] hover:bg-[#DFFF12] text-[#0A0B0D] font-bold text-sm py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-[#E2F135]/15 hover:scale-[1.01] disabled:opacity-50 cursor-pointer"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Sending Message...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </div>
             </form>
           </div>
         </div>

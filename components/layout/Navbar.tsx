@@ -89,7 +89,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             <Link
-              href="/contact"
+              href="/start-project"
               className="inline-flex items-center gap-2 bg-[#E2F135] hover:bg-[#DFFF12] text-[#0A0B0D] font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-200 shadow-lg shadow-[#E2F135]/15 hover:shadow-[#E2F135]/30 hover:scale-[1.03]"
             >
               <span>Start a Project</span>
@@ -133,7 +133,7 @@ export default function Navbar() {
 
             <div className="pt-4 mt-2 border-t border-[#252830] flex flex-col gap-3">
               <Link
-                href="/contact"
+                href="/start-project"
                 onClick={handleNavClick}
                 className="w-full text-center bg-[#E2F135] hover:bg-[#DFFF12] text-[#0A0B0D] font-bold text-sm py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-[#E2F135]/20"
               >

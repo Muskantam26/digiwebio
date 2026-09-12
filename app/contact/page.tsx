@@ -3,9 +3,9 @@ import FAQSection from "@/components/sections/FAQSection";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata = generatePageMetadata({
-  title: "Contact Us | Start a Project with DigiWebIO",
+  title: "Contact Us | DigiWebIO",
   description:
-    "Get in touch with DigiWebIO for web development, web application engineering, UI/UX design, SEO, and custom ERP software. Request a project proposal today.",
+    "Get in touch with the DigiWebIO team for web development, UI/UX design, custom software, and digital marketing inquiries. We're here to help.",
   path: "/contact",
 });
 
@@ -17,13 +17,13 @@ export default function ContactPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E2F135] mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-[#E2F135]" />
-              Direct Project Enquiry
+              Get In Touch
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-6">
-              Let&apos;s build your next digital product together.
+              Contact our team directly.
             </h1>
             <p className="text-base text-slate-300 leading-relaxed">
-              Fill out our enquiry form or connect directly with our engineering leads via email or WhatsApp. We reply to all inquiries within 24 hours.
+              Have questions, technical inquiries, or want to discuss collaboration? Drop us a message below or connect with our leads via email or WhatsApp. We reply within 24 hours.
             </p>
           </div>
         </div>

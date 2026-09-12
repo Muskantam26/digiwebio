@@ -25,7 +25,7 @@ export default function Footer() {
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/contact"
+                href="/start-project"
                 className="inline-flex items-center gap-2 bg-[#E2F135] hover:bg-[#DFFF12] text-[#0A0B0D] font-bold text-sm px-6 py-3.5 rounded-full transition-all duration-200 shadow-lg shadow-[#E2F135]/15 hover:scale-105"
               >
                 <span>Start Your Project</span>
